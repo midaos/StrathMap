@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrathMap | Campus Navigation</title>
+    <style>
+        /* 1. Strathmore Brand Colors */
+        :root {
+            --strath-blue: #0A369D; /* Deep Navy Blue */
+            --strath-red: #E2231A;  /* Crimson Red */
+            --strath-gold: #F2A900; /* Golden Yellow */
+            --bg-light: #F4F6F8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Forces the app to take up the full screen height */
+        }
+
+        /* 2. Header & Search Section */
+        header {
+            background-color: var(--strath-blue);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-bottom: 5px solid var(--strath-red); /* Red accent line */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--strath-gold); /* Golden Title */
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .search-container input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+
+        /* 3. Main Map Display Area */
+        main {
+            flex-grow: 1; /* Automatically fills the empty space below the header */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #map-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+            background-color: #e0e0e0;
+            border: 3px dashed #b0b0b0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>StrathMap</h1>
+        <div class="search-container">
+            <input type="text" id="destination-search" placeholder="Search for an office, MSB, or restaurant...">
+        </div>
+    </header>
+
+    <main>
+        <div id="map-container">
+            [ Interactive Map Will Render Here ]
+        </div>
+    </main>
+
+</body>
+</html>
