@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Floors</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <h2>StrathMap</h2>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="buildings.html">Buildings</a>
+    <a href="floors.html">Floors</a>
+    <a href="entrances.html">Entrances</a>
+    <a href="categories.html">Categories</a>
+    <a href="locations.html">Locations</a>
+  </aside>
+
+  <main class="main-content">
+    <h1>Manage Floors</h1>
+
+    <section class="form-card">
+      <h2>Add Floor</h2>
+
+      <form id="floorForm">
+        <label>Building</label>
+        <select id="buildingId" required></select>
+
+        <label>Floor Number</label>
+        <input type="number" id="floorNumber" required />
+
+        <label>Floor Name</label>
+        <input type="text" id="floorName" placeholder="Ground Floor, First Floor..." required />
+
+        <button type="submit">Add Floor</button>
+        <div id="message" class="message"></div>
+      </form>
+    </section>
+
+    <section class="table-card">
+      <h2>Existing Floors</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Building Code</th>
+            <th>Building Name</th>
+            <th>Floor Number</th>
+            <th>Floor Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="floorTableBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../assets/js/controllers/FloorController.js"></script>
+
+</body>
+</html>

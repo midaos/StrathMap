@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Categories</title>
+
+    <link rel="stylesheet"
+          href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <aside class="sidebar">
+
+        <h2>StrathMap</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="buildings.html">Buildings</a>
+        <a href="floors.html">Floors</a>
+        <a href="entrances.html">Entrances</a>
+        <a href="categories.html">Categories</a>
+        <a href="locations.html">Locations</a>
+
+    </aside>
+
+    <main class="main-content">
+
+        <h1>Manage Categories</h1>
+
+        <section class="form-card">
+
+            <h2>Add Category</h2>
+
+            <form id="categoryForm">
+
+                <label>Category Name</label>
+
+                <input type="text"
+                       id="categoryName"
+                       required>
+
+                <label>Description</label>
+
+                <textarea id="description"></textarea>
+
+                <button type="submit">
+                    Add Category
+                </button>
+
+                <div id="message"
+                     class="message"></div>
+
+            </form>
+
+        </section>
+
+        <section class="table-card">
+
+            <h2>Existing Categories</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="categoryTableBody"></tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script type="module"
+        src="../assets/js/controllers/LocationCategoryController.js">
+</script>
+
+</body>
+</html>

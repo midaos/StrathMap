@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Buildings</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <h2>StrathMap</h2>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="buildings.html">Buildings</a>
+    <a href="floors.html">Floors</a>
+    <a href="entrances.html">Entrances</a>
+    <a href="categories.html">Categories</a>
+    <a href="locations.html">Locations</a>
+  </aside>
+
+  <main class="main-content">
+    <h1>Manage Buildings</h1>
+
+    <section class="form-card">
+      <h2>Add Building</h2>
+
+      <form id="buildingForm">
+        <label>Building Name</label>
+        <input type="text" id="buildingName" required />
+
+        <label>Building Code</label>
+        <input type="text" id="buildingCode" required />
+
+        <label>Description</label>
+        <textarea id="description"></textarea>
+
+        <button type="submit">Add Building</button>
+        <div id="message" class="message"></div>
+      </form>
+    </section>
+
+    <section class="table-card">
+      <h2>Existing Buildings</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Building Name</th>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="buildingTableBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../assets/js/controllers/BuildingController.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Locations</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <h2>StrathMap</h2>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="buildings.html">Buildings</a>
+    <a href="floors.html">Floors</a>
+    <a href="entrances.html">Entrances</a>
+    <a href="categories.html">Categories</a>
+    <a href="locations.html">Locations</a>
+  </aside>
+
+  <main class="main-content">
+    <h1>Manage Locations</h1>
+
+    <section class="form-card">
+      <h2>Add Location</h2>
+
+      <form id="locationForm">
+        <label>Floor</label>
+        <select id="floorId" required></select>
+
+        <label>Category</label>
+        <select id="categoryId" required></select>
+
+        <label>Nearest Entrance / Endpoint</label>
+        <select id="nearestEntranceId" required></select>
+
+        <label>Location Name</label>
+        <input type="text" id="locationName" required />
+
+        <label>Location Code</label>
+        <input type="text" id="locationCode" placeholder="Example: F2-02" />
+
+        <label>Description</label>
+        <textarea id="description"></textarea>
+
+        <label>
+          <input type="checkbox" id="isSearchable" checked />
+          Searchable
+        </label>
+
+        <button type="submit">Add Location</button>
+        <div id="message" class="message"></div>
+      </form>
+    </section>
+
+    <section class="table-card">
+      <h2>Existing Locations</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Location</th>
+            <th>Code</th>
+            <th>Category</th>
+            <th>Building</th>
+            <th>Floor</th>
+            <th>Endpoint</th>
+            <th>Searchable</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="locationTableBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../assets/js/controllers/LocationController.js"></script>
+
+</body>
+</html>
