@@ -93,6 +93,34 @@
             [ Interactive Map Will Render Here ]
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <script>
+        // Paste your exact URL and Key from the Supabase Settings page here:
+        const supabaseUrl = 'sb_publishable_UXMPgpBpuTyU5U5RGNNJ6w_1BTz3NAn';
+        const supabaseKey = 'sb_secret_gAWABhs6b1AHOwvbANYsrQ_5khYV71N';
+        
+        // This creates the connection
+        const supabase = supabaseOrigin.createClient(supabaseUrl, supabaseKey);
+
+        // 3. A simple test function to see if it works
+        async function testDatabaseConnection() {
+            // "Go to the locations table, and select everything"
+            let { data: locations, error } = await supabase
+                .from('locations')
+                .select('*');
+
+            if (error) {
+                console.error("Connection failed:", error);
+            } else {
+                console.log("Success! Here is the data from Supabase:", locations);
+            }
+        }
+
+        // Run the test
+        testDatabaseConnection();
+    </script>
+</body>
+</html>
 </body>
 </html>
