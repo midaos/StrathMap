@@ -101,7 +101,7 @@
         const supabaseKey = 'sb_secret_gAWABhs6b1AHOwvbANYsrQ_5khYV71N';
         
         // This creates the connection
-        const supabaseClient = supabaseOrigin.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         // 3. A simple test function to see if it works
         async function testDatabaseConnection() {
