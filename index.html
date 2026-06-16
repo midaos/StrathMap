@@ -1,126 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StrathMap | Campus Navigation</title>
-    <style>
-        /* 1. Strathmore Brand Colors */
-        :root {
-            --strath-blue: #0A369D; /* Deep Navy Blue */
-            --strath-red: #E2231A;  /* Crimson Red */
-            --strath-gold: #F2A900; /* Golden Yellow */
-            --bg-light: #F4F6F8;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <title>StrathMap</title>
 
-        body {
-            background-color: var(--bg-light);
-            display: flex;
-            flex-direction: column;
-            height: 100vh; /* Forces the app to take up the full screen height */
-        }
-
-        /* 2. Header & Search Section */
-        header {
-            background-color: var(--strath-blue);
-            padding: 1.5rem 2rem;
-            text-align: center;
-            border-bottom: 5px solid var(--strath-red); /* Red accent line */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            color: var(--strath-gold); /* Golden Title */
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .search-container input {
-            width: 100%;
-            max-width: 500px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            outline: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-        }
-
-        /* 3. Main Map Display Area */
-        main {
-            flex-grow: 1; /* Automatically fills the empty space below the header */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        #map-container {
-            width: 100%;
-            max-width: 1200px;
-            height: 100%;
-            background-color: #e0e0e0;
-            border: 3px dashed #b0b0b0;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #666;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-    </style>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 </head>
+
 <body>
 
-    <header>
-        <h1>StrathMap</h1>
-        <div class="search-container">
-            <input type="text" id="destination-search" placeholder="Search for an office, building, or restaurant...">
-        </div>
-    </header>
+<header class="public-header">
+  <h1>StrathMap</h1>
+  <nav>
+    <a href="directory.html">Open Directory</a>
+    <a href="admin/login.html">Admin</a>
+  </nav>
+</header>
 
-    <main>
-        <div id="map-container">
-            [ Interactive Map Will Render Here ]
-        </div>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<main class="map-home">
+  <section class="home-overlay">
+    <h2>Welcome to StrathMap</h2>
+    <p>View your current campus position or open the directory to search for destinations.</p>
+    <a href="directory.html" class="primary-link">Search Directory</a>
+  </section>
 
-    <script>
-        // Paste your exact URL and Key from the Supabase Settings page here:
-        const supabaseUrl = 'https://hcawkkraxgbgphxqttjs.supabase.co';
-        const supabaseKey = 'sb_publishable_UXMPgpBpuTyU5U5RGNNJ6w_1BTz3NAn';
-        
-        // This creates the connection
-        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+  <div id="homeMap"></div>
+</main>
 
-        // 3. A simple test function to see if it works
-        async function testDatabaseConnection() {
-            // "Go to the locations table, and select everything"
-            let { data: locations, error } = await supabaseClient
-                .from('locations')
-                .select('*');
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script type="module" src="assets/js/controllers/HomeMapController.js"></script>
 
-            if (error) {
-                console.error("Connection failed:", error);
-            } else {
-                console.log("Success! Here is the data from Supabase:", locations);
-            }
-        }
-
-        // Run the test
-        testDatabaseConnection();
-    </script>
-</body>
-</html>
 </body>
 </html>

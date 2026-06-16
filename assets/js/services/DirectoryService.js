@@ -1,6 +1,6 @@
 import { SupabaseClient } from "../config/SupabaseClient.js";
 
-export default class SearchService {
+export default class DirectoryService {
   constructor() {
     this.supabase = SupabaseClient.getClient();
   }
@@ -13,7 +13,27 @@ export default class SearchService {
       .replace(/^([A-Z])(\d)(\d{2})$/, "$1$2-$3");
   }
 
-  async searchDestination(rawInput) {
+  async getDirectory() {
+    const { data, error } = await this.supabase
+      .from("buildings")
+      .select(`
+        *,
+        floors(
+          *,
+          locations(
+            *,
+            location_categories(*),
+            entrances(*)
+          )
+        )
+      `)
+      .order("building_name");
+
+    if (error) throw new Error(error.message);
+    return data;
+  }
+
+  async searchLocation(rawInput) {
     const normalizedQuery = this.normalizeQuery(rawInput);
 
     const { data, error } = await this.supabase
@@ -29,16 +49,8 @@ export default class SearchService {
             building_code
           )
         ),
-        location_categories(
-          category_id,
-          category_name
-        ),
-        entrances(
-          entrance_id,
-          entrance_name,
-          latitude,
-          longitude
-        )
+        location_categories(*),
+        entrances(*)
       `)
       .eq("is_searchable", true)
       .or(`location_code.ilike.%${normalizedQuery}%,location_name.ilike.%${rawInput}%`)

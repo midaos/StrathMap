@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>StrathMap Directory</title>
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body>
+
+<header class="public-header">
+  <h1>StrathMap Directory</h1>
+  <nav>
+    <a href="index.html">Campus Map</a>
+    <a href="admin/login.html">Admin</a>
+  </nav>
+</header>
+
+<main class="public-page">
+
+  <section class="search-section">
+    <h2>Search Directory</h2>
+    <p>Search for classrooms, offices, facilities, and services.</p>
+
+    <form id="directorySearchForm" class="search-form">
+      <input
+        type="text"
+        id="directorySearchInput"
+        placeholder="Example: F2-02, Microsoft Auditorium, Finance Office"
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
+  </section>
+
+  <section id="resultBox"></section>
+
+  <section class="directory-section">
+    <h2>Browse Campus Directory</h2>
+    <div id="directoryContainer"></div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="assets/js/controllers/DirectoryController.js"></script>
+
+</body>
+</html>
