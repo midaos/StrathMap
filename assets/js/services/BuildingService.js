@@ -18,7 +18,9 @@ export default class BuildingService {
       row.building_id,
       row.building_name,
       row.building_code,
-      row.description
+      row.description,
+      row.latitude,
+      row.longitude
     ));
   }
 

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StrathMap Admin Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -9,7 +11,10 @@
 <div class="dashboard-layout">
 
     <aside class="sidebar">
-        <h2>StrathMap</h2>
+        <div class="sidebar-header" style="text-align: center; margin-bottom: 30px;">
+            <img src="../logo.png" alt="" style="width: 100px; height: 100px; margin-bottom: 20px;" />
+            <h2>StrathMap</h2>
+        </div>
 
         <a href="#">Dashboard</a>
         <a href="buildings.html">Buildings</a>
@@ -21,35 +26,142 @@
 
     <main class="main-content">
 
-        <h1>Dashboard</h1>
-
-        <div class="stats-grid">
-
-            <div class="stat-card">
-                <h3>Total Buildings</h3>
-                <p id="buildingCount">0</p>
+        <div class="page-heading">
+            <div>
+                <span class="eyebrow">StrathMap admin</span>
+                <h1>Dashboard</h1>
             </div>
-
-            <div class="stat-card">
-                <h3>Total Locations</h3>
-                <p id="locationCount">0</p>
-            </div>
-
-            <div class="stat-card">
-                <h3>Total Searches</h3>
-                <p id="searchCount">0</p>
-            </div>
-
-            <div class="stat-card">
-                <h3>Today's Searches</h3>
-                <p id="todayCount">0</p>
-            </div>
-
+            <div class="dashboard-date" id="dashboardDate">Loading campus analytics</div>
         </div>
+
+        <div id="dashboardAlert" class="dashboard-alert" hidden></div>
+
+        <section class="stats-grid dashboard-stat-grid">
+            <div class="stat-card">
+                <h3>Campus Buildings</h3>
+                <p id="buildingCount">0</p>
+                <span id="buildingMeta">Campus records</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>Directory Depth</h3>
+                <p id="locationCount">0</p>
+                <span id="locationMeta">Directory destinations</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>Navigation Pulse</h3>
+                <p id="searchCount">0</p>
+                <span id="searchMeta">Campus wayfinding requests</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>Today's Movement</h3>
+                <p id="todayCount">0</p>
+                <span id="todayMeta">Fresh activity since midnight</span>
+            </div>
+        </section>
+
+        <section class="analytics-grid">
+            <article class="highlight-card location-of-week">
+                <span class="eyebrow">Campus hotspot</span>
+                <h2 id="weeklyLocationName">No search data yet</h2>
+                <p id="weeklyLocationMeta">The most requested destination from the last 7 days will appear here.</p>
+                <div class="highlight-metric">
+                    <strong id="weeklyLocationCount">0</strong>
+                    <span id="weeklyLocationCountLabel">weekly searches</span>
+                </div>
+            </article>
+
+            <article class="highlight-card most-visited-card">
+                <span class="eyebrow">Student favourite</span>
+                <h2 id="mostVisitedName">No search data yet</h2>
+                <p id="mostVisitedMeta">The destination students ask StrathMap for most often.</p>
+                <div class="highlight-metric">
+                    <strong id="mostVisitedCount">0</strong>
+                    <span>total searches</span>
+                </div>
+            </article>
+
+            <article class="insight-card">
+                <span class="eyebrow">Most searched category</span>
+                <h2 id="topCategoryName">No data</h2>
+                <p id="topCategoryMeta">The category leading destination searches.</p>
+            </article>
+
+            <article class="insight-card">
+                <span class="eyebrow">Most visited building</span>
+                <h2 id="topBuildingName">No data</h2>
+                <p id="topBuildingMeta">Based on selected destinations.</p>
+            </article>
+        </section>
+
+        <section class="dashboard-grid">
+            <article class="dashboard-panel">
+                <div class="panel-title-row">
+                    <div>
+                        <span class="eyebrow">Weekly activity</span>
+                        <h2>Searches this week</h2>
+                    </div>
+                    <span id="weeklyTotalBadge" class="metric-badge">0 searches</span>
+                </div>
+                <div id="weeklyChart" class="weekly-chart" aria-label="Searches by day"></div>
+            </article>
+
+            <article class="dashboard-panel">
+                <div class="panel-title-row">
+                    <div>
+                        <span class="eyebrow">Top destinations</span>
+                        <h2>Most requested</h2>
+                    </div>
+                </div>
+                <div id="topLocationsList" class="rank-list"></div>
+            </article>
+
+            <article class="dashboard-panel">
+                <div class="panel-title-row">
+                    <div>
+                        <span class="eyebrow">Campus coverage</span>
+                        <h2>System readiness</h2>
+                    </div>
+                </div>
+                <div class="coverage-grid">
+                    <div>
+                        <strong id="searchableCount">0</strong>
+                        <span>Searchable locations</span>
+                    </div>
+                    <div>
+                        <strong id="entranceCount">0</strong>
+                        <span>Mapped entrances</span>
+                    </div>
+                    <div>
+                        <strong id="floorCount">0</strong>
+                        <span>Floors configured</span>
+                    </div>
+                    <div>
+                        <strong id="categoryCount">0</strong>
+                        <span>Categories</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="dashboard-panel">
+                <div class="panel-title-row">
+                    <div>
+                        <span class="eyebrow">Category leaderboard</span>
+                        <h2>What people look for</h2>
+                    </div>
+                </div>
+                <div id="topCategoriesList" class="rank-list"></div>
+            </article>
+        </section>
 
     </main>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../assets/js/controllers/DashboardController.js"></script>
 
 </body>
 </html>

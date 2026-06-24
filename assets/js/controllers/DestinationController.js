@@ -52,7 +52,7 @@ class DestinationController {
       <p><strong>Building:</strong> ${building.building_code} - ${building.building_name}</p>
       <p><strong>Floor:</strong> ${floor.floor_name}</p>
       <p><strong>Category:</strong> ${category.category_name}</p>
-      <p><strong>Route Endpoint:</strong> ${entrance.entrance_name}</p>
+      <p><strong>Building entrance:</strong> ${entrance.entrance_name}</p>
     `;
   }
 
@@ -75,8 +75,8 @@ class DestinationController {
   showMap(userLat, userLng) {
     const entrance = this.destination.entrances;
 
-    const endpointLat = Number(entrance.latitude);
-    const endpointLng = Number(entrance.longitude);
+    const entranceLat = Number(entrance.latitude);
+    const entranceLng = Number(entrance.longitude);
 
     this.mapContainer.style.display = "block";
     this.getDirectionsBtn.style.display = "none";
@@ -96,14 +96,14 @@ class DestinationController {
       .bindPopup("Your Location")
       .openPopup();
 
-    L.marker([endpointLat, endpointLng])
+    L.marker([entranceLat, entranceLng])
       .addTo(this.map)
       .bindPopup("Building Entrance");
 
     this.routingControl = L.Routing.control({
       waypoints: [
         L.latLng(userLat, userLng),
-        L.latLng(endpointLat, endpointLng)
+        L.latLng(entranceLat, entranceLng)
       ],
       routeWhileDragging: false
     }).addTo(this.map);

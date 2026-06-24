@@ -70,7 +70,12 @@ class BuildingController {
       const buildingCode = document.getElementById("buildingCode").value.trim().toUpperCase();
       const description = document.getElementById("description").value.trim();
 
-      const building = new Building(null, buildingName, buildingCode, description);
+      const building = new Building(
+        null,
+        buildingName,
+        buildingCode,
+        description
+      );
 
       await this.buildingService.createBuilding(building);
 
@@ -127,6 +132,7 @@ class BuildingController {
       this.message.className = "message error";
     }
   }
+
 }
 
 new BuildingController();

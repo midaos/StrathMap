@@ -7,19 +7,9 @@ export default class LocationService {
   }
 
   async getAllLocations() {
-    const { data, error } = await this.supabase
-      .from("locations")
-      .select(`
-        *,
-        floors(floor_name, floor_number, buildings(building_name, building_code)),
-        location_categories(category_name),
-        entrances(entrance_name)
-      `)
-      .order("location_name");
+    const data = await this.fetchAllLocations();
 
-    if (error) throw new Error(error.message);
-
-    return data.map(row => ({
+    return data.map((row) => ({
       location: new Location(
         row.location_id,
         row.floor_id,
@@ -34,6 +24,35 @@ export default class LocationService {
       category: row.location_categories,
       entrance: row.entrances
     }));
+  }
+
+  async fetchAllLocations() {
+    const pageSize = 1000;
+    let from = 0;
+    let rows = [];
+
+    while (true) {
+      const { data, error } = await this.supabase
+        .from("locations")
+        .select(`
+          *,
+          floors(floor_name, floor_number, buildings(building_name, building_code)),
+          location_categories(category_name),
+          entrances(entrance_name)
+        `)
+        .order("location_name")
+        .range(from, from + pageSize - 1);
+
+      if (error) throw new Error(error.message);
+
+      rows = rows.concat(data || []);
+
+      if (!data || data.length < pageSize) {
+        return rows;
+      }
+
+      from += pageSize;
+    }
   }
 
   async createLocation(location) {

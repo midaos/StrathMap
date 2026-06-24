@@ -18,9 +18,12 @@ class LocationController {
     this.categorySelect = document.getElementById("categoryId");
     this.entranceSelect = document.getElementById("nearestEntranceId");
     this.tableBody = document.getElementById("locationTableBody");
+    this.filterInput = document.getElementById("locationFilterInput");
+    this.resultSummary = document.getElementById("locationResultSummary");
     this.message = document.getElementById("message");
     this.editingId = null;
     this.submitButton = null;
+    this.locationRecords = [];
 
     this.initialize();
   }
@@ -38,6 +41,10 @@ class LocationController {
       event.preventDefault();
       if (this.editingId) await this.handleUpdateLocation();
       else await this.handleCreateLocation();
+    });
+
+    this.filterInput?.addEventListener("input", () => {
+      this.renderLocations();
     });
   }
 
@@ -74,19 +81,36 @@ class LocationController {
 
   async loadLocations() {
     const records = await this.locationService.getAllLocations();
+    this.locationRecords = records;
+    this.updateLocationSummary(records);
+    this.renderLocations();
+  }
 
+  renderLocations() {
+    const query = this.filterInput?.value.trim().toLowerCase() || "";
+    const records = this.locationRecords.filter((record) => this.matchesLocationFilter(record, query));
     this.tableBody.innerHTML = "";
+
+    if (!records.length) {
+      this.tableBody.innerHTML = `
+        <tr>
+          <td colspan="8">No locations match the current filter.</td>
+        </tr>
+      `;
+      this.updateResultSummary(records.length, this.locationRecords.length);
+      return;
+    }
 
     records.forEach(record => {
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td>${record.location.locationName}</td>
-        <td>${record.location.locationCode || ""}</td>
-        <td>${record.category?.category_name || ""}</td>
-        <td>${record.floor?.buildings?.building_code || ""}</td>
-        <td>${record.floor?.floor_name || ""}</td>
-        <td>${record.entrance?.entrance_name || ""}</td>
+        <td>${this.escapeHTML(record.location.locationName)}</td>
+        <td>${this.escapeHTML(record.location.locationCode || "")}</td>
+        <td>${this.escapeHTML(record.category?.category_name || "")}</td>
+        <td>${this.escapeHTML(record.floor?.buildings?.building_code || "")}</td>
+        <td>${this.escapeHTML(record.floor?.floor_name || "")}</td>
+        <td>${this.escapeHTML(record.entrance?.entrance_name || "")}</td>
         <td>${record.location.isSearchable ? "Yes" : "No"}</td>
         <td>
           <button class="edit-btn" data-id="${record.location.locationId}">Edit</button>
@@ -105,6 +129,39 @@ class LocationController {
 
       this.tableBody.appendChild(row);
     });
+
+    this.updateResultSummary(records.length, this.locationRecords.length);
+  }
+
+  matchesLocationFilter(record, query) {
+    if (!query) return true;
+
+    const searchableText = [
+      record.location.locationName,
+      record.location.locationCode,
+      record.category?.category_name,
+      record.floor?.buildings?.building_code,
+      record.floor?.buildings?.building_name,
+      record.floor?.floor_name,
+      record.entrance?.entrance_name,
+      record.location.isSearchable ? "searchable" : "hidden"
+    ].join(" ").toLowerCase();
+
+    return searchableText.includes(query);
+  }
+
+  updateLocationSummary(records) {
+    this.setText("locationsTotal", records.length);
+    this.setText("locationsSearchable", records.filter((record) => record.location.isSearchable).length);
+    this.setText("locationsLinked", records.filter((record) => record.location.nearestEntranceId).length);
+  }
+
+  updateResultSummary(visibleCount, totalCount) {
+    if (!this.resultSummary) return;
+
+    this.resultSummary.textContent = visibleCount === totalCount
+      ? `${totalCount} locations loaded`
+      : `${visibleCount} of ${totalCount} locations shown`;
   }
 
   async handleCreateLocation() {
@@ -196,6 +253,20 @@ class LocationController {
       this.message.textContent = error.message;
       this.message.className = "message error";
     }
+  }
+
+  setText(id, value) {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  }
+
+  escapeHTML(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 }
 

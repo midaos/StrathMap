@@ -46,7 +46,9 @@ export default class DirectoryService {
           buildings(
             building_id,
             building_name,
-            building_code
+            building_code,
+            latitude,
+            longitude
           )
         ),
         location_categories(*),

@@ -14,25 +14,96 @@
 <body>
 
 <header class="public-header">
-  <h1>StrathMap</h1>
-  <nav>
-    <a href="directory.html">Open Directory</a>
-    <a href="admin/login.html">Admin</a>
-  </nav>
+  <div class="header-inner">
+    <a href="index.html" class="brand-mark" aria-label="StrathMap campus map">
+     <img src="logo.png" alt="" style ="width: 100px; height: 100px; margin-right: 10px;" />
+      <span class="brand-copy">
+        <strong>Strathmore</strong>
+        <small>University Campus Map</small>
+      </span>
+    </a>
+
+    <div class="header-actions">
+
+      <nav aria-label="Primary navigation">
+        <a href="index.html" class="active">Map</a>
+        <a href="directory.html">Directory</a>
+        <a href="admin/login.html" class="support-link">Admin</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
 <main class="map-home">
-  <section class="home-overlay">
-    <h2>Welcome to StrathMap</h2>
-    <p>View your current campus position or open the directory to search for destinations.</p>
-    <a href="directory.html" class="primary-link">Search Directory</a>
+  <button
+    id="wayfindingToggle"
+    class="map-drawer-toggle"
+    type="button"
+    aria-controls="wayfindingPanel"
+    aria-expanded="false"
+  >
+    Search
+  </button>
+
+  <section id="wayfindingPanel" class="wayfinding-panel" aria-label="Campus wayfinding controls">
+    <div class="panel-heading">
+      <div>
+        <span class="panel-kicker">Strathmore University</span>
+        <h1>Campus map</h1>
+      </div>
+      <button id="wayfindingClose" class="drawer-close-btn" type="button" aria-label="Close search panel">Close</button>
+    </div>
+
+    <form id="mapSearchForm" class="map-search-form" role="search">
+      <label for="mapSearchInput">Destination</label>
+      <div class="map-search-box">
+        <input
+          type="search"
+          id="mapSearchInput"
+          placeholder="Find a classroom, office, or service"
+          autocomplete="off"
+        />
+        <button type="submit">Search</button>
+      </div>
+    </form>
+
+    <div id="mapResultPanel" class="destination-card">
+      <div>
+        <span class="destination-label">No destination selected</span>
+        <h2>Choose where you want to go</h2>
+      </div>
+      <p class="result-help">Search for a classroom, office, service, auditorium, or room code.</p>
+      <a href="directory.html" class="directory-link">Open full directory</a>
+    </div>
+
+    <div class="map-legend" aria-label="Map legend">
+      <span><i class="legend-current"></i>You are here</span>
+      <span><i class="legend-route"></i>Campus route</span>
+      <span><i class="legend-destination"></i>Destination</span>
+    </div>
+
+    <div id="buildingKeyPanel" class="building-key" aria-label="Building abbreviation key">
+      <div class="building-key-title">Building key</div>
+      <p>Building abbreviations will appear here.</p>
+    </div>
+
+    <a href="directory.html" class="directory-link">Open full directory</a>
   </section>
 
   <div id="homeMap"></div>
+
+  <aside id="routeStatusBar" class="route-status-bar" aria-live="polite">
+    <div>
+      <span class="status-label">Status</span>
+      <strong id="routeStatusTitle">Ready</strong>
+    </div>
+    <span id="routeStatusMeta">Search or choose a destination to begin routing.</span>
+  </aside>
 </main>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="module" src="assets/js/controllers/HomeMapController.js"></script>
 
 </body>

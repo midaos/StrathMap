@@ -64,7 +64,7 @@ class SearchController {
         <p><strong>Building:</strong> ${building.building_code} - ${building.building_name}</p>
         <p><strong>Floor:</strong> ${floor.floor_name}</p>
         <p><strong>Category:</strong> ${category.category_name}</p>
-        <p><strong>Route Endpoint:</strong> ${entrance.entrance_name}</p>
+        <p><strong>Building entrance:</strong> ${entrance.entrance_name}</p>
 
         <button id="directionsBtn">
           Get Directions

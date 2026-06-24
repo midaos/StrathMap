@@ -7,23 +7,38 @@
   <title>StrathMap Directory</title>
 
   <link rel="stylesheet" href="assets/css/styles.css" />
+   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 
 <body>
 
 <header class="public-header">
-  <h1>StrathMap Directory</h1>
-  <nav>
-    <a href="index.html">Campus Map</a>
-    <a href="admin/login.html">Admin</a>
-  </nav>
+  <div class="header-inner">
+    <a href="index.html" class="brand-mark" aria-label="StrathMap campus map">
+     <img src="logo.png" alt="" style ="width: 100px; height: 100px; margin-right: 10px;" />
+      <span class="brand-copy">
+        <strong>Strathmore</strong>
+        <small>University Campus Map</small>
+      </span>
+    </a>
+
+    <div class="header-actions">
+
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Map</a>
+        <a href="directory.html" class="active">Directory</a>
+        <a href="admin/login.html" class="support-link">Admin</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
 <main class="public-page">
 
   <section class="search-section">
-    <h2>Search Directory</h2>
-    <p>Search for classrooms, offices, facilities, and services.</p>
+    <span class="section-kicker">Campus directory</span>
+    <h1>Search for a destination</h1>
+    <p>Find classrooms, offices, facilities, and services, then start routing to your destination.</p>
 
     <form id="directorySearchForm" class="search-form">
       <input
@@ -39,7 +54,16 @@
   <section id="resultBox"></section>
 
   <section class="directory-section">
-    <h2>Browse Campus Directory</h2>
+    <div class="directory-section-heading">
+      <div>
+        <span class="section-kicker">Buildings</span>
+        <h2>Browse all destinations</h2>
+      </div>
+      <div class="directory-tools" aria-label="Directory controls">
+        <button id="expandDirectoryBtn" type="button">Expand all</button>
+        <button id="collapseDirectoryBtn" type="button">Collapse all</button>
+      </div>
+    </div>
     <div id="directoryContainer"></div>
   </section>
 
