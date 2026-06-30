@@ -4,6 +4,7 @@ import LocationService from "../services/LocationService.js";
 import FloorService from "../services/FloorService.js";
 import EntranceService from "../services/EntranceService.js";
 import LocationCategoryService from "../services/LocationCategoryService.js";
+import NotificationService from "../services/NotificationService.js";
 
 class LocationController {
   constructor() {
@@ -12,6 +13,7 @@ class LocationController {
     this.floorService = new FloorService();
     this.entranceService = new EntranceService();
     this.categoryService = new LocationCategoryService();
+    this.notifications = new NotificationService();
 
     this.form = document.getElementById("locationForm");
     this.floorSelect = document.getElementById("floorId");
@@ -203,10 +205,21 @@ class LocationController {
   }
 
   async handleDeleteLocation(locationId) {
-    if (!confirm("Delete this location?")) return;
+    const shouldDelete = await this.notifications.confirm({
+      title: "Delete location?",
+      message: "This removes the destination from student search and routing.",
+      confirmText: "Delete location"
+    });
 
-    await this.locationService.deleteLocation(locationId);
-    await this.loadLocations();
+    if (!shouldDelete) return;
+
+    try {
+      await this.locationService.deleteLocation(locationId);
+      await this.loadLocations();
+      this.notifications.success("Location deleted successfully.");
+    } catch (error) {
+      this.notifications.deleteError("Location", error);
+    }
   }
 
   handleEditLocation(record) {

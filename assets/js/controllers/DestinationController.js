@@ -1,5 +1,8 @@
+import NotificationService from "../services/NotificationService.js";
+
 class DestinationController {
   constructor() {
+    this.notifications = new NotificationService();
     this.destination = JSON.parse(
       localStorage.getItem("selectedDestination")
     );
@@ -58,7 +61,7 @@ class DestinationController {
 
   startNavigation() {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported by this browser.");
+      this.notifications.error("Geolocation is not supported by this browser.", { title: "GPS unavailable" });
       return;
     }
 
@@ -67,7 +70,7 @@ class DestinationController {
         this.showMap(position.coords.latitude, position.coords.longitude);
       },
       () => {
-        alert("Location access denied. Please enable location to use navigation.");
+        this.notifications.error("Enable location access to use navigation.", { title: "Location access denied" });
       }
     );
   }

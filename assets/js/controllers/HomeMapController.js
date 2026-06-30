@@ -775,17 +775,30 @@ class HomeMapController {
   }
 
   completeOutdoorNavigation() {
+    const completedDestination = this.destination;
+
     this.arrivalReached = true;
     this.destinationNearby = false;
     this.routeActive = false;
     this.clearRouteLayers();
     this.clearArrivalMarker();
     localStorage.removeItem("selectedDestination");
-    this.setStatus("Destination building reached", "Continue inside using the building, floor, and room details.");
-    this.resultPanel.classList.remove("destination-nearby");
-    this.resultPanel.classList.add("arrival-reached");
-    this.updateDestinationPanel(this.destination, { reached: true });
-    this.openWayfindingPanel();
+    this.destination = null;
+    if (this.searchInput) this.searchInput.value = "";
+    this.resultPanel.classList.remove("destination-nearby", "arrival-reached");
+    this.applyDestinationHighlights();
+    this.renderEmptyDestinationPanel();
+    this.closeWayfindingPanel();
+    this.setStatus(
+      "Navigation ended",
+      `${completedDestination?.location_name || "Destination"} reached.`
+    );
+
+    window.setTimeout(() => {
+      if (!this.routeActive) {
+        this.routeStatusBar?.classList.remove("is-active");
+      }
+    }, 4000);
   }
 
   getDestinationBuildingDistance(latLng) {

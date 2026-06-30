@@ -2,12 +2,14 @@ import AuthGuard from "../services/AuthGuard.js";
 import Floor from "../models/Floor.js";
 import FloorService from "../services/FloorService.js";
 import BuildingService from "../services/BuildingService.js";
+import NotificationService from "../services/NotificationService.js";
 
 class FloorController {
   constructor() {
     this.authGuard = new AuthGuard();
     this.floorService = new FloorService();
     this.buildingService = new BuildingService();
+    this.notifications = new NotificationService();
 
     this.form = document.getElementById("floorForm");
     this.buildingSelect = document.getElementById("buildingId");
@@ -109,10 +111,21 @@ class FloorController {
   }
 
   async handleDeleteFloor(floorId) {
-    if (!confirm("Delete this floor?")) return;
+    const shouldDelete = await this.notifications.confirm({
+      title: "Delete floor?",
+      message: "Locations on this floor should be moved or deleted first.",
+      confirmText: "Delete floor"
+    });
 
-    await this.floorService.deleteFloor(floorId);
-    await this.loadFloors();
+    if (!shouldDelete) return;
+
+    try {
+      await this.floorService.deleteFloor(floorId);
+      await this.loadFloors();
+      this.notifications.success("Floor deleted successfully.");
+    } catch (error) {
+      this.notifications.deleteError("Floor", error);
+    }
   }
 
   handleEditFloor(floor, building) {

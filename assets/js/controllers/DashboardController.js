@@ -130,7 +130,6 @@ class DashboardController {
       }
     }
 
-    console.warn("Search log analytics unavailable:", lastError?.message || lastError);
     return [];
   }
 

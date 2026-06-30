@@ -50,11 +50,41 @@ export default class BuildingService {
   }
 
   async deleteBuilding(buildingId) {
+    const dependencies = await this.getBuildingDependencies(buildingId);
+
+    if (dependencies.entrances || dependencies.floors) {
+      const parts = [];
+      if (dependencies.entrances) parts.push(`${dependencies.entrances} entrance${dependencies.entrances === 1 ? "" : "s"}`);
+      if (dependencies.floors) parts.push(`${dependencies.floors} floor${dependencies.floors === 1 ? "" : "s"}`);
+
+      throw new Error(`This building cannot be deleted because it still has ${parts.join(" and ")} linked to it. Delete or move those records first.`);
+    }
+
     const { error } = await this.supabase
       .from("buildings")
       .delete()
       .eq("building_id", buildingId);
 
     if (error) throw new Error(error.message);
+  }
+
+  async getBuildingDependencies(buildingId) {
+    const [entrances, floors] = await Promise.all([
+      this.countRows("entrances", "building_id", buildingId),
+      this.countRows("floors", "building_id", buildingId)
+    ]);
+
+    return { entrances, floors };
+  }
+
+  async countRows(table, column, value) {
+    const { count, error } = await this.supabase
+      .from(table)
+      .select("*", { count: "exact", head: true })
+      .eq(column, value);
+
+    if (error) throw new Error(error.message);
+
+    return count || 0;
   }
 }

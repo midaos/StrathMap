@@ -1316,3 +1316,97 @@ td button {
     min-width: 0;
   }
 }
+/* Feedback admin */
+.feedback-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, 0.6fr);
+  gap: 12px;
+  width: min(100%, 560px);
+}
+
+.feedback-admin-list {
+  display: grid;
+  gap: 14px;
+}
+
+.feedback-admin-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(0, 102, 153, 0.035);
+}
+
+.feedback-admin-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.feedback-admin-header h3 {
+  margin: 6px 0 0;
+  color: var(--ink);
+  font-size: 1.02rem;
+}
+
+.feedback-category,
+.feedback-rating {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.feedback-category {
+  background: var(--gold-soft);
+  color: var(--ink);
+}
+
+.feedback-rating {
+  flex: 0 0 auto;
+  background: var(--forest-800);
+  color: white;
+}
+
+.feedback-admin-card p {
+  margin: 0 0 14px;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.feedback-admin-card dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.feedback-admin-card dt {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.feedback-admin-card dd {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+@media (max-width: 780px) {
+  .feedback-filters,
+  .feedback-admin-card dl {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-admin-header {
+    display: grid;
+  }
+}

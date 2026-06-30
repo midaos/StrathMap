@@ -26,6 +26,7 @@ For administrators, the system provides structured tools to manage large numbers
 - Destination card with building, floor, room code, category, and indoor guidance.
 - `I have arrived` confirmation appears only when the user reaches the destination area.
 - Building abbreviation labels and a building key for easier map reading.
+- Public feedback form for reporting map, search, GPS, directory, or destination issues.
 - Mobile-first interface with Strathmore-inspired styling.
 
 ### Directory
@@ -54,6 +55,7 @@ For administrators, the system provides structured tools to manage large numbers
   - Weekly activity
   - System readiness
 - Search log analytics are defensive and handle older or partial log data where possible.
+- Feedback inbox for viewing submitted student and visitor feedback.
 
 ### Admin CRUD
 
@@ -64,6 +66,7 @@ Admins can manage:
 - Floors
 - Location categories
 - Locations
+- Feedback submissions
 
 The Locations admin page is designed for large datasets:
 
@@ -71,6 +74,7 @@ The Locations admin page is designed for large datasets:
 - Summary cards for total, searchable, and entrance-linked locations.
 - Local filtering by room, building, floor, category, entrance, and visibility.
 - Clear separation between outdoor entrances and indoor room details.
+- Read-only feedback review with category filters, ratings, device details, and optional shared GPS coordinates.
 
 ## System Scope
 
@@ -164,6 +168,7 @@ This separation keeps the project understandable and maintainable without adding
 - `admin/floors.html`: Floors linked to buildings.
 - `admin/categories.html`: Location categories.
 - `admin/locations.html`: Room, office, and destination records.
+- `admin/feedback.html`: Read-only feedback inbox.
 
 ### Controllers
 
@@ -171,10 +176,13 @@ This separation keeps the project understandable and maintainable without adding
 - `DirectoryController.js`: Directory search, building and floor accordions, destination selection.
 - `DashboardController.js`: Admin analytics and dashboard summaries.
 - `LocationController.js`: Admin location management, filtering, and summaries.
+- `FeedbackController.js`: Public feedback submission.
+- `FeedbackAdminController.js`: Admin feedback review.
 
 ### Services
 
 - `DirectoryService.js`: Directory loading, destination search, search logging.
+- `FeedbackService.js`: Feedback submission and admin feedback retrieval.
 - `LocationService.js`: Location CRUD and paginated location reads.
 - `BuildingService.js`, `EntranceService.js`, `FloorService.js`, `LocationCategoryService.js`: Admin CRUD support.
 - `AuthService.js`, `AuthGuard.js`: Admin authentication and access control.
@@ -190,6 +198,7 @@ The system expects these main tables in Supabase:
 - `location_categories`
 - `locations`
 - `search_logs`
+- `feedback`
 
 Conceptually:
 
@@ -200,6 +209,7 @@ Conceptually:
 - A location belongs to a category.
 - A location is linked to the building entrance students should use.
 - Search logs record destination searches for dashboard analytics.
+- Feedback records store user-submitted comments, category, rating, device context, and optional GPS coordinates.
 
 Building coordinates are used for visual building labels on the map. Entrance coordinates are used for outdoor navigation.
 

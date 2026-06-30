@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-header" style="text-align: center; margin-bottom: 30px;">
+      <img src="../logo.png" alt="" style="width: 100px; height: 100px; margin-bottom: 20px;" />
+      <h2>StrathMap</h2>
+    </div>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="buildings.html">Buildings</a>
+    <a href="floors.html">Floors</a>
+    <a href="entrances.html">Entrances</a>
+    <a href="categories.html">Categories</a>
+    <a href="locations.html">Locations</a>
+    <a href="feedback.html">Feedback</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-heading">
+      <div>
+        <span class="eyebrow">Student feedback</span>
+        <h1>Feedback Inbox</h1>
+      </div>
+      <div class="dashboard-date" id="feedbackUpdatedAt">Loading feedback</div>
+    </div>
+
+    <div id="feedbackAlert" class="dashboard-alert" hidden></div>
+
+    <section class="stats-grid compact-admin-stats" aria-label="Feedback summary">
+      <div class="stat-card">
+        <h3>Total Feedback</h3>
+        <p id="feedbackTotal">0</p>
+        <span>All submitted messages</span>
+      </div>
+      <div class="stat-card">
+        <h3>Average Rating</h3>
+        <p id="feedbackAverage">0</p>
+        <span>Out of 5 where provided</span>
+      </div>
+      <div class="stat-card">
+        <h3>Top Category</h3>
+        <p id="feedbackTopCategory">None</p>
+        <span id="feedbackTopCategoryMeta">No category data yet</span>
+      </div>
+    </section>
+
+    <section class="table-card">
+      <div class="table-toolbar">
+        <div>
+          <h2>Submitted Feedback</h2>
+          <p id="feedbackResultSummary">Loading feedback...</p>
+        </div>
+        <div class="feedback-filters">
+          <label class="table-search">
+            <span>Search feedback</span>
+            <input type="search" id="feedbackSearchInput" placeholder="Search message, destination, category..." />
+          </label>
+          <label class="table-search">
+            <span>Category</span>
+            <select id="feedbackCategoryFilter">
+              <option value="">All categories</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div id="feedbackList" class="feedback-admin-list"></div>
+    </section>
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="../assets/js/controllers/FeedbackAdminController.js"></script>
+
+</body>
+</html>

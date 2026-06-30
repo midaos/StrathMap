@@ -2,12 +2,14 @@ import AuthGuard from "../services/AuthGuard.js";
 import Entrance from "../models/Entrance.js";
 import EntranceService from "../services/EntranceService.js";
 import BuildingService from "../services/BuildingService.js";
+import NotificationService from "../services/NotificationService.js";
 
 class EntranceController {
   constructor() {
     this.authGuard = new AuthGuard();
     this.entranceService = new EntranceService();
     this.buildingService = new BuildingService();
+    this.notifications = new NotificationService();
 
     this.form = document.getElementById("entranceForm");
     this.buildingSelect = document.getElementById("buildingId");
@@ -117,10 +119,21 @@ class EntranceController {
   }
 
   async handleDeleteEntrance(entranceId) {
-    if (!confirm("Delete this entrance?")) return;
+    const shouldDelete = await this.notifications.confirm({
+      title: "Delete entrance?",
+      message: "Locations using this entrance should be moved to another entrance first.",
+      confirmText: "Delete entrance"
+    });
 
-    await this.entranceService.deleteEntrance(entranceId);
-    await this.loadEntrances();
+    if (!shouldDelete) return;
+
+    try {
+      await this.entranceService.deleteEntrance(entranceId);
+      await this.loadEntrances();
+      this.notifications.success("Entrance deleted successfully.");
+    } catch (error) {
+      this.notifications.deleteError("Entrance", error);
+    }
   }
 
   handleEditEntrance(entrance) {

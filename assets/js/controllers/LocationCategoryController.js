@@ -1,11 +1,13 @@
 import AuthGuard from "../services/AuthGuard.js";
 import LocationCategory from "../models/LocationCategory.js";
 import LocationCategoryService from "../services/LocationCategoryService.js";
+import NotificationService from "../services/NotificationService.js";
 
 class LocationCategoryController {
   constructor() {
     this.authGuard = new AuthGuard();
     this.categoryService = new LocationCategoryService();
+    this.notifications = new NotificationService();
 
     this.form = document.getElementById("categoryForm");
     this.tableBody = document.getElementById("categoryTableBody");
@@ -100,12 +102,22 @@ class LocationCategoryController {
 
   async handleDeleteCategory(categoryId) {
 
-    if (!confirm("Delete this category?"))
+    const shouldDelete = await this.notifications.confirm({
+      title: "Delete category?",
+      message: "Locations using this category should be moved to another category first.",
+      confirmText: "Delete category"
+    });
+
+    if (!shouldDelete)
       return;
 
-    await this.categoryService.deleteCategory(categoryId);
-
-    await this.loadCategories();
+    try {
+      await this.categoryService.deleteCategory(categoryId);
+      await this.loadCategories();
+      this.notifications.success("Category deleted successfully.");
+    } catch (error) {
+      this.notifications.deleteError("Category", error);
+    }
   }
 
   handleEditCategory(category) {

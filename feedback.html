@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>StrathMap Feedback</title>
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<header class="public-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand-mark" aria-label="StrathMap campus map">
+      <img src="logo.png" alt="" style="width: 100px; height: 100px; margin-right: 10px;" />
+      <span class="brand-copy">
+        <strong>Strathmore</strong>
+        <small>University Campus Map</small>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Map</a>
+        <a href="directory.html">Directory</a>
+        <a href="feedback.html" class="active">Feedback</a>
+        <a href="admin/login.html" class="support-link">Admin</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="public-page feedback-page">
+
+  <section class="search-section feedback-hero">
+    <span class="section-kicker">Help improve StrathMap</span>
+    <h1>Send feedback</h1>
+    <p>Tell us what worked, what was confusing, or what should be corrected. Your feedback helps keep campus navigation clear for everyone.</p>
+  </section>
+
+  <section class="feedback-shell">
+    <form id="feedbackForm" class="feedback-form">
+      <div class="form-grid">
+        <div>
+          <label for="userName">Name optional</label>
+          <input type="text" id="userName" maxlength="100" placeholder="Your name" />
+        </div>
+
+        <div>
+          <label for="category">Category</label>
+          <select id="category" required>
+            <option value="">Choose category</option>
+            <option value="Wrong location information">Wrong location information</option>
+            <option value="Search issue">Search issue</option>
+            <option value="Route or GPS issue">Route or GPS issue</option>
+            <option value="Map label issue">Map label issue</option>
+            <option value="Directory suggestion">Directory suggestion</option>
+            <option value="General feedback">General feedback</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label for="searchedQuery">What did you search?</label>
+          <input type="text" id="searchedQuery" maxlength="150" placeholder="Example: MSB 3, Finance Office" />
+        </div>
+
+        <div>
+          <label for="destination">Destination</label>
+          <input type="text" id="destination" maxlength="150" placeholder="Room, office, building, or service" />
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label for="currentPage">Where did this happen?</label>
+          <select id="currentPage">
+            <option value="map">Map</option>
+            <option value="directory">Directory</option>
+            <option value="feedback">Feedback page</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="rating">Rating</label>
+          <select id="rating">
+            <option value="">No rating</option>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Okay</option>
+            <option value="2">2 - Difficult</option>
+            <option value="1">1 - Not useful</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="feedbackMessage">Feedback</label>
+      <textarea id="feedbackMessage" maxlength="2000" placeholder="Describe what happened or what should be improved." required></textarea>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="shareLocation" />
+        Include my current GPS location with this feedback
+      </label>
+
+      <button type="submit">Submit feedback</button>
+      <div id="feedbackMessageBox" class="feedback-message" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="assets/js/controllers/FeedbackController.js"></script>
+
+</body>
+</html>

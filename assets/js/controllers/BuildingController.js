@@ -1,11 +1,13 @@
 import AuthGuard from "../services/AuthGuard.js";
 import Building from "../models/Building.js";
 import BuildingService from "../services/BuildingService.js";
+import NotificationService from "../services/NotificationService.js";
 
 class BuildingController {
   constructor() {
     this.authGuard = new AuthGuard();
     this.buildingService = new BuildingService();
+    this.notifications = new NotificationService();
 
     this.form = document.getElementById("buildingForm");
     this.tableBody = document.getElementById("buildingTableBody");
@@ -91,10 +93,21 @@ class BuildingController {
   }
 
   async handleDeleteBuilding(buildingId) {
-    if (!confirm("Delete this building?")) return;
+    const shouldDelete = await this.notifications.confirm({
+      title: "Delete building?",
+      message: "This will only work if the building has no entrances, floors, or locations linked to it.",
+      confirmText: "Delete building"
+    });
 
-    await this.buildingService.deleteBuilding(buildingId);
-    await this.loadBuildings();
+    if (!shouldDelete) return;
+
+    try {
+      await this.buildingService.deleteBuilding(buildingId);
+      await this.loadBuildings();
+      this.notifications.success("Building deleted successfully.");
+    } catch (error) {
+      this.notifications.deleteError("Building", error);
+    }
   }
 
   handleEditBuilding(building) {
